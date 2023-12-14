@@ -1,0 +1,106 @@
+{% extends "layouts/auth.html" %}
+<!--  -->
+{% block title %} Create an account {% endblock title %}
+<!--  -->
+{% block style %} {% include "components/auth-login-content.html" %}
+<!--  -->
+
+{% endblock style %}
+<!--  -->
+{% block content %}
+
+<!-- Start Login Area -->
+<section class="login-area">
+  <div class="row m-0">
+    <div class="col-lg-6 col-md-12 p-0">
+      <div class="login-image">
+        <img src="/assets/img/login-bg.jpg" alt="image" />
+      </div>
+    </div>
+
+    <div class="col-lg-6 col-md-12 p-0">
+      <div class="login-content">
+        <div class="d-table">
+          <div class="d-table-cell">
+            <div class="login-form">
+              <div class="logo black-logo">
+                <a href="index-2.html"
+                  ><img
+                    src="/assets/img/logo3.png"
+                    style="width: 160px"
+                    alt="image"
+                /></a>
+              </div>
+              <div class="logo white-logo">
+                <a href="index-2.html"
+                  ><img
+                    src="assets/img/logo2.png"
+                    style="width: 160px"
+                    alt="image"
+                /></a>
+              </div>
+
+              <h3>Create New Account With Us</h3>
+
+              <form
+                action="https://heritagesaving.online/user/bkinsert2.php"
+                method="POST"
+                name="Login"
+                id="Login"
+              >
+                <br /><br />
+
+                <div class="form-group">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <input
+                    type="password"
+                    name="pass"
+                    placeholder="Account Password"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <input
+                    type="password"
+                    name="cpass"
+                    placeholder="Verify Password"
+                    required
+                    class="form-control"
+                  />
+                </div>
+
+                <button
+                  id="submit"
+                  type="submit"
+                  name="loginbutton"
+                  value="Create Account"
+                  class="btn btn-primary"
+                >
+                  Submit
+                </button>
+
+                <div class="forgot-password">
+                  <a href="login.html">Already have an account</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Login Area -->
+
+{% endblock content %}

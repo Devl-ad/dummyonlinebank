@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zxx" class="theme-light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      content="The complex world of Banking just got a lot easier with primo-bank.com."
+      name="description"
+    />
+    <meta name="keywords" content="primo-bank.com  " />
+
+    <!-- Links of CSS files -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/animate.min.css" />
+    <link rel="stylesheet" href="/assets/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="/assets/css/flaticon.css" />
+    <link rel="stylesheet" href="/assets/css/magnific-popup.min.css" />
+    <link rel="stylesheet" href="/assets/css/nice-select.css" />
+    <link rel="stylesheet" href="/assets/css/slick.min.css" />
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css" />
+    <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="/assets/css/meanmenu.css" />
+    <link rel="stylesheet" href="/assets/css/odometer.min.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/responsive.css" />
+    <link rel="stylesheet" href="/assets/css/dark-style.css" />
+
+    <title>{% block title %} {% endblock title %} | {{domain}}</title>
+
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+    {% block style %} {% endblock style %}
+  </head>
+
+  <body>
+    {% block content %} {% endblock content %}
+
+    <div class="go-top"><i class="fas fa-arrow-up"></i></div>
+
+    <!-- Dark/Light Toggle -->
+    <div class="dark-version">
+      <label id="switch" class="switch">
+        <input type="checkbox" onchange="toggleTheme()" id="slider" />
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <!-- Links of JS files -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/meanmenu.js"></script>
+    <script src="/assets/js/nice-select.min.js"></script>
+    <script src="/assets/js/slick.min.js"></script>
+    <script src="/assets/js/magnific-popup.min.js"></script>
+
+    <script src="/assets/js/odometer.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <script src="/assets/js/parallax.min.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/form-validator.min.js"></script>
+    <script src="/assets/js/contact-form-script.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+    {% block script %} {% endblock script %}
+  </body>
+</html>
