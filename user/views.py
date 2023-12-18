@@ -11,3 +11,7 @@ def account_details(request):
 
 def statement(request):
     return render(request, "user/statement.html")
+
+
+def domestic_transafer(request):
+    return render(request, "user/domestic_transafer.html")
