@@ -1,6 +1,6 @@
 {% extends 'layouts/user.html' %}
 <!--  -->
-{% block title %} Domestic transfer {% endblock title %}
+{% block title %} International transfer {% endblock title %}
 
 <!--  -->
 {% block content %}
@@ -72,7 +72,7 @@
             class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
           >
             <h2 class="font-medium text-base mr-auto">
-              Transfer to the same bank
+              International transfer
             </h2>
             <div
               class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0"
@@ -89,50 +89,126 @@
               action="confirm_transfer.php?account="
               name="regform"
             >
-              <div class="preview">
-                <div class="form-inline mt-5">
-                  <label for="horizontal-form-2" class="form-label"
-                    >Account Number
-                  </label>
-                  <input
-                    id="horizontal-form-2"
-                    type="text"
-                    class="form-control"
-                    name="pay_no"
-                  />
-                </div>
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >First Name
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="fname"
+                />
+              </div>
 
-                <p class="text-muted mt-5">
-                  benneficiary : &nbsp;<span class="text-warning"></span>
-                </p>
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >Last Name
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="lname"
+                />
+              </div>
 
-                <div class="form-inline mt-5">
-                  <label for="horizontal-form-2" class="form-label">
-                    Amount
-                  </label>
-                  <input
-                    id="horizontal-form-2"
-                    type="number"
-                    class="form-control"
-                    name="pay_amt"
-                  />
-                </div>
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label">City </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="city"
+                />
+              </div>
 
-                <div class="form-inline mt-5">
-                  <label for="horizontal-form-2" class="form-label"
-                    >Purpose of transfer
-                  </label>
-                  <input
-                    id="horizontal-form-2"
-                    type="text"
-                    class="form-control"
-                    name="desc"
-                  />
-                </div>
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >Country
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="Country"
+                />
+              </div>
 
-                <div class="sm:ml-20 sm:pl-5 mt-5">
-                  <button class="btn btn-primary" name="submit">Next</button>
-                </div>
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >Beneficiary account number
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="number"
+                  class="form-control"
+                  name="pay_no"
+                />
+              </div>
+
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >IBAN Number
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="number"
+                  class="form-control"
+                  name="iban"
+                />
+              </div>
+
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >Bank Name
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="bank_name"
+                />
+              </div>
+
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label">
+                  Swift/BIC Code
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="bic"
+                />
+              </div>
+
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label">
+                  Amount
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="pay_amt"
+                />
+              </div>
+
+              <div class="form-inline mt-5">
+                <label for="horizontal-form-2" class="form-label"
+                  >Purpose of transfer
+                </label>
+                <input
+                  id="horizontal-form-2"
+                  type="text"
+                  class="form-control"
+                  name="desc"
+                />
+              </div>
+
+              <div class="sm:ml-20 sm:pl-5 mt-5">
+                <button class="btn btn-primary" name="submit">Next</button>
               </div>
             </form>
           </div>

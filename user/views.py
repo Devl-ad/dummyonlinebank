@@ -13,5 +13,13 @@ def statement(request):
     return render(request, "user/statement.html")
 
 
-def domestic_transafer(request):
-    return render(request, "user/domestic_transafer.html")
+def domestic_transfer(request):
+    return render(request, "user/domestic_transfer.html")
+
+
+def outside_transfer(request):
+    return render(request, "user/outside_transfer.html")
+
+
+def inter_transfer(request):
+    return render(request, "user/inter_transfer.html")
