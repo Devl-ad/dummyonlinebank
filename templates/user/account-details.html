@@ -48,31 +48,9 @@
       >
         <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />
       </div>
-      <div class="dropdown-menu w-56">
-        <ul class="dropdown-content bg-primary text-white">
-          <li class="p-2">
-            <div class="font-medium">Trinh Nita</div>
-          </li>
-          <li><hr class="dropdown-divider border-white/[0.08]" /></li>
-          <li>
-            <a href="transfers.php" class="dropdown-item hover:bg-white/5">
-              <i data-lucide="user" class="w-4 h-4 mr-2"></i> Send Funds
-            </a>
-          </li>
-          <li>
-            <a href="" class="dropdown-item hover:bg-white/5">
-              <i data-lucide="edit" class="w-4 h-4 mr-2"></i> Statement
-            </a>
-          </li>
-
-          <li><hr class="dropdown-divider border-white/[0.08]" /></li>
-          <li>
-            <a href="logout.php" class="dropdown-item hover:bg-white/5">
-              <i data-lucide="toggle-right" class="w-4 h-4 mr-2"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
+      <!-- dropdown -->
+      {% include 'components/user-profile-icon.html' %}
+      <!-- dropdown -->
     </div>
     <!-- END: Account Menu -->
   </div>

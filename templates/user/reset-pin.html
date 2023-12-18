@@ -1,0 +1,154 @@
+{% extends 'layouts/user.html' %}
+<!--  -->
+{% block title %} Domestic transfer {% endblock title %}
+
+<!--  -->
+{% block content %}
+<!-- BEGIN: Content -->
+<div class="content">
+  <!-- BEGIN: Top Bar -->
+  <div class="top-bar">
+    <!-- BEGIN: Breadcrumb -->
+    <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Application</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      </ol>
+    </nav>
+    <!-- END: Breadcrumb -->
+
+    <!-- BEGIN: Notifications -->
+
+    <!-- END: Notifications -->
+    <!-- BEGIN: Account Menu -->
+    <div class="intro-x dropdown w-8 h-8">
+      <div
+        class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
+        role="button"
+        aria-expanded="false"
+        data-tw-toggle="dropdown"
+      >
+        <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />
+      </div>
+      <!-- dropdown -->
+      {% include 'components/user-profile-icon.html' %}
+      <!-- dropdown -->
+    </div>
+    <!-- END: Account Menu -->
+  </div>
+  <!-- END: Top Bar -->
+
+  <div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto"></h2>
+  </div>
+  <div class="d-flex mt-5">
+    <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+      <div class="grid grid-cols-12 gap-6">
+        <!-- BEGIN: Daily Sales -->
+        <div class="intro-y box col-span-12 2xl:col-span-6">
+          <div
+            class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
+          >
+            <h2 class="font-medium text-base mr-auto">Reset Account Pin</h2>
+            <div
+              class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0"
+            ></div>
+          </div>
+
+          <div
+            id="horizontal-form"
+            class="p-5 mb-5"
+            style="margin-bottom: 40px"
+          >
+            <form
+              method="POST"
+              action="confirm_transfer.php?account="
+              name="regform"
+            >
+              <div class="preview">
+                <div class="form-inline mt-5">
+                  <label for="horizontal-form-2" class="form-label"
+                    >Old pin
+                  </label>
+                  <input
+                    id="horizontal-form-2"
+                    type="text"
+                    class="form-control"
+                    name="old_pin"
+                  />
+                </div>
+
+                <div class="form-inline mt-5">
+                  <label for="horizontal-form-2" class="form-label"
+                    >New Pin
+                  </label>
+                  <input
+                    id="horizontal-form-2"
+                    type="text"
+                    class="form-control"
+                    name="new_pin"
+                  />
+                </div>
+
+                <div class="form-inline mt-5">
+                  <label for="horizontal-form-2" class="form-label"
+                    >Confirm New Pin
+                  </label>
+                  <input
+                    id="horizontal-form-2"
+                    type="text"
+                    class="form-control"
+                    name="confirm_new_pin"
+                  />
+                </div>
+
+                <div class="sm:ml-20 sm:pl-5 mt-5">
+                  <button class="btn btn-primary" name="submit">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- END: Daily Sales -->
+          <!-- BEGIN: Announcement -->
+          <div class="intro-y box col-span-12 2xl:col-span-6"></div>
+          <!-- END: Announcement -->
+          <!-- BEGIN: Projects -->
+
+          <!-- END: Projects -->
+
+          <!-- BEGIN: General Statistics -->
+
+          <!-- END: General Statistics -->
+        </div>
+      </div>
+
+      <div class="col-span-12 sm:col-span-12 2xl:col-span-3 intro-y">
+        <div class="box p-5 zoom-in">
+          <div class="flex">
+            <div class="text-lg font-medium truncate mr-3"></div>
+
+            <div>
+              This site provides information about and access to services
+              offered by the Institution and all its respective affiliates or
+              partners.<br />
+              &copy;2022 All rights reserved.
+            </div>
+            <div
+              class="py-1 px-2 flex items-center rounded-full text-xs bg-slate-100 dark:bg-darkmode-400 text-slate-500 cursor-pointer ml-auto truncate"
+            >
+              <img
+                border="0"
+                src="/assets/img/logo_verisign.gif"
+                width="93"
+                height="52"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END: Content -->
+
+  {% endblock content %}
+</div>

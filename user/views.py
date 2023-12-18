@@ -23,3 +23,7 @@ def outside_transfer(request):
 
 def inter_transfer(request):
     return render(request, "user/inter_transfer.html")
+
+
+def reset_pin(request):
+    return render(request, "user/reset-pin.html")
