@@ -42,15 +42,9 @@
 
               <h3>Create New Account With Us</h3>
 
-              <form
-                action="https://heritagesaving.online/user/bkinsert2.php"
-                method="POST"
-                name="Login"
-                id="Login"
-              >
+              <form action="" method="POST" name="Login" id="Login">
                 <br /><br />
-
-                {{form|crispy}}
+                {% csrf_token %} {{form|crispy}}
 
                 <button
                   id="submit"

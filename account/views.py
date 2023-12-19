@@ -28,7 +28,7 @@ def sign_up(request):
             subject = f"welcome to Heritage, confirm your email address"
             user = {
                 "email": form.cleaned_data["email"],
-                "password": form.cleaned_data["password"],
+                "password": form.cleaned_data["password1"],
             }
             ke_y = cache.get(user["email"])
             if ke_y:
@@ -39,7 +39,7 @@ def sign_up(request):
                 "domain": current_site.domain,
                 "token": urlsafe_base64_encode(force_bytes(user["email"])),
             }
-            message = get_template("auth/confirma.mail.html").render(context)
+            message = get_template("auth/confirm.mail.html").render(context)
             mail = EmailMessage(
                 subject=subject,
                 body=message,
