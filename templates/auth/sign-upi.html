@@ -1,4 +1,4 @@
-{% extends "layouts/auth.html" %}
+{% extends "layouts/auth.html" %} {% load crispy_forms_tags %}
 <!--  -->
 {% block title %} Create an account {% endblock title %}
 <!--  -->
@@ -50,35 +50,7 @@
               >
                 <br /><br />
 
-                <div class="form-group">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    required
-                    class="form-control"
-                  />
-                </div>
-
-                <div class="form-group">
-                  <input
-                    type="password"
-                    name="pass"
-                    placeholder="Account Password"
-                    required
-                    class="form-control"
-                  />
-                </div>
-
-                <div class="form-group">
-                  <input
-                    type="password"
-                    name="cpass"
-                    placeholder="Verify Password"
-                    required
-                    class="form-control"
-                  />
-                </div>
+                {{form|crispy}}
 
                 <button
                   id="submit"
