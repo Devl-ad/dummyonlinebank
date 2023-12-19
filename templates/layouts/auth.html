@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/responsive.css" />
     <link rel="stylesheet" href="/assets/css/dark-style.css" />
+    <link rel="stylesheet" href="/assets/css/toastr.min.css" />
 
     <title>{% block title %} {% endblock title %} | {{domain}}</title>
 
@@ -34,6 +35,10 @@
   </head>
 
   <body>
+    {% if messages %} {% for msg in messages %}
+    <div style="display: none" class="messages" data-msg="{{ msg }}"></div>
+    {% endfor %} {% endif %}
+    <!--  -->
     {% block content %} {% endblock content %}
 
     <div class="go-top"><i class="fas fa-arrow-up"></i></div>
@@ -61,6 +66,13 @@
     <script src="/assets/js/form-validator.min.js"></script>
     <script src="/assets/js/contact-form-script.js"></script>
     <script src="/assets/js/main.js"></script>
+
+    <script src="/assets/js/toastr.min.js"></script>
+    {% if messages %}
+    <script src="/assets/js/toastr-init.js"></script>
+    {% endif %}
+    <script src="/assets/js/circle-progress.min.js"></script>
+    <script src="/assets/js/circle-progress-init.js"></script>
 
     {% block script %} {% endblock script %}
   </body>
