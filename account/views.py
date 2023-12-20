@@ -13,7 +13,7 @@ from account.models import Account
 
 from baseapp import utils
 
-from .forms import RegisterForm
+from .forms import RegisterForm, CreateAcctForm
 
 
 def sign_in(request):
@@ -59,7 +59,28 @@ def sign_up(request):
 
 
 def createacct(request):
-    return render(request, "auth/sign-upii.html")
+    authToken = request.GET.get("authToken")
+    if authToken is None:
+        messages.info(request, "Link is invalid")
+        return redirect("register")
+    if authToken and not utils.checkToken(authToken):
+        messages.info(request, "Link is invalid or has expired")
+        return redirect("register")
+    if request.POST:
+        form = CreateAcctForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            messages.info(request, "Account created successfully")
+            return redirect("dashboard")
+        else:
+            print(form.errors)
+    else:
+        userData = utils.getToken(authToken)
+        print(userData)
+        initial_data = {"password": userData["password"], "email": userData["email"]}
+        form = CreateAcctForm(initial=initial_data)
+
+    return render(request, "auth/sign-upii.html", {"form": form})
 
 
 def confirm_mail(request):

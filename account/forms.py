@@ -57,3 +57,238 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["email", "password1", "password2"]
+
+
+class CreateAcctForm(forms.ModelForm):
+    """
+    The default
+
+    """
+
+    email = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "hidden": True,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    first_name = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "First name",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    last_name = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Last Name",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    phone_number = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "tel",
+                "class": "form-control",
+                "placeholder": "Phone number",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    date_of_birth = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "date",
+                "class": "form-control",
+                "placeholder": "Date of Birth",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    gender = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Gender",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    # next_of_kin = forms.CharField(
+    #     max_length=80,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             "type": "text",
+    #             "class": "form-control",
+    #             "placeholder": "Next of kin",
+    #             "autocomplete": False,
+    #         }
+    #     ),
+    #     label=False,
+    #     required=True,
+    # )
+
+    address = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Address",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    city = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "City",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    state = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "State",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    zipcode = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Zipcode",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    country = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Country",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    account_type = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Account type",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    security_pin = forms.CharField(
+        max_length=4,
+        widget=forms.TextInput(
+            attrs={
+                "type": "number",
+                "class": "form-control",
+                "placeholder": "4 Digit Security pin",
+                "autocomplete": False,
+            }
+        ),
+        label=False,
+        required=True,
+    )
+
+    password = forms.CharField(
+        max_length=30,
+        min_length=6,
+        label=False,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "hidden": True,
+            }
+        ),
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            "email",
+            "first_name",
+            "last_name",
+            "phone_number",
+            "date_of_birth",
+            "gender",
+            # "next_of_kin",
+            "address",
+            "city",
+            "state",
+            "zipcode",
+            "country",
+            "account_type",
+            "security_pin",
+            "password",
+        ]

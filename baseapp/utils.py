@@ -2,10 +2,12 @@ import random
 from django.conf import settings
 from django.utils import timezone
 from uuid import uuid4
-
+from django.utils.http import urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_str
 from django.core.mail import EmailMessage
 from django.template.loader import get_template
+from django.core.cache import cache
 
 
 def gen_random_number():
@@ -55,3 +57,28 @@ def alertTx(transaction, current_site, subject, status, to_email, name):
     )
     mail.content_subtype = "html"
     mail.send(fail_silently=True)
+
+
+def checkToken(token):
+    ke_y = None
+    try:
+        ke_y = force_str(urlsafe_base64_decode(token))
+    except:
+        ke_y = None
+    if ke_y is not None:
+        data = cache.get(ke_y)
+        if data:
+            return True
+    return False
+
+
+def getToken(verifyToken):
+    """
+    This fuction must be called only when the token has been verified
+    """
+
+    ke_y = force_str(urlsafe_base64_decode(verifyToken))
+
+    data = cache.get(ke_y)
+
+    return data
