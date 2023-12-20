@@ -33,7 +33,7 @@ def sign_up(request):
             ke_y = cache.get(user["email"])
             if ke_y:
                 cache.delete(user["email"])
-            cache.set(user["email"], user, timeout=300)
+            cache.set(user["email"], user, timeout=600)
             context = {
                 "user": user,
                 "domain": current_site.domain,
@@ -71,12 +71,27 @@ def createacct(request):
         form = CreateAcctForm(request.POST)
         if form.is_valid():
             cache.delete(userData[1])
-            print(form.cleaned_data)
-            form.save()
-            messages.info(request, "Account created successfully")
-            return redirect("dashboard")
-        else:
-            print(form.errors)
+            instance = form.save()
+            current_site = get_current_site(request)
+            subject = f"Welcome to {current_site.domain}"
+            context = {
+                "user": instance,
+                "domain": current_site.domain,
+            }
+            message = get_template("auth/welcome.email.html").render(context)
+            mail = EmailMessage(
+                subject=subject,
+                body=message,
+                from_email=utils.EMAIL_ADMIN,
+                to=[instance.email],
+                reply_to=[utils.EMAIL_ADMIN],
+            )
+            mail.content_subtype = "html"
+            mail.send(fail_silently=True)
+            messages.info(
+                request, "Account created successfully Check your mail for information"
+            )
+            return redirect("login")
     else:
         userData = userData[0]
         initial_data = {"password": userData["password"], "email": userData["email"]}

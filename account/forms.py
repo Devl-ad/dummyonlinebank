@@ -299,7 +299,7 @@ class CreateAcctForm(forms.ModelForm):
         user = super(CreateAcctForm, self).save(commit=False)  # Get the form instance
 
         # Process and assign additional fields if needed
-        user.username = (utils.gen_random_number(),)
+        user.username = utils.gen_random_number()
         # For example, hashing passwords before saving
         if user.password:
             user.set_password(user.password)
