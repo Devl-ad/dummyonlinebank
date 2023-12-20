@@ -82,3 +82,13 @@ def getToken(verifyToken):
     data = cache.get(ke_y)
 
     return [data, ke_y]
+
+
+def check_user(email, model):
+    account = None
+    try:
+        account = model.objects.get(email__exact=email)
+    except model.DoesNotExist:
+        account = None
+
+    return account

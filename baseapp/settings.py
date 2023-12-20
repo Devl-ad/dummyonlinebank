@@ -160,3 +160,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+LOGIN_REDIRECT = "dashboard"
+LOGIN_URL = "login"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

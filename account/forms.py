@@ -308,3 +308,44 @@ class CreateAcctForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class LoginForm(forms.ModelForm):
+    username = forms.CharField(
+        max_length=12,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Account Number",
+            }
+        ),
+        label=False,
+        required=True,
+    )
+    password = forms.CharField(
+        max_length=10,
+        min_length=6,
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+                "class": "form-control",
+            }
+        ),
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "username",
+            "password",
+        )
+
+    def clean(self):
+        if self.is_valid():
+            if not authenticate(
+                username=self.cleaned_data["username"],
+                password=self.cleaned_data["password"],
+            ):
+                raise forms.ValidationError("Invalid Account number or Password")
