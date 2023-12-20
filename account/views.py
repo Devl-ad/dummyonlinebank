@@ -66,17 +66,19 @@ def createacct(request):
     if authToken and not utils.checkToken(authToken):
         messages.info(request, "Link is invalid or has expired")
         return redirect("register")
+    userData = utils.getToken(authToken)
     if request.POST:
         form = CreateAcctForm(request.POST)
         if form.is_valid():
+            cache.delete(userData[1])
             print(form.cleaned_data)
+            form.save()
             messages.info(request, "Account created successfully")
             return redirect("dashboard")
         else:
             print(form.errors)
     else:
-        userData = utils.getToken(authToken)
-        print(userData)
+        userData = userData[0]
         initial_data = {"password": userData["password"], "email": userData["email"]}
         form = CreateAcctForm(initial=initial_data)
 

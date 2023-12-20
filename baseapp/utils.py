@@ -81,4 +81,4 @@ def getToken(verifyToken):
 
     data = cache.get(ke_y)
 
-    return data
+    return [data, ke_y]

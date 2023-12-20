@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 
+from baseapp import utils
+
 
 User = get_user_model()
 
@@ -247,13 +249,13 @@ class CreateAcctForm(forms.ModelForm):
     )
 
     security_pin = forms.CharField(
+        min_length=4,
         max_length=4,
         widget=forms.TextInput(
             attrs={
-                "type": "number",
+                "type": "text",
                 "class": "form-control",
                 "placeholder": "4 Digit Security pin",
-                "autocomplete": False,
             }
         ),
         label=False,
@@ -292,3 +294,17 @@ class CreateAcctForm(forms.ModelForm):
             "security_pin",
             "password",
         ]
+
+    def save(self, commit=True):
+        user = super(CreateAcctForm, self).save(commit=False)  # Get the form instance
+
+        # Process and assign additional fields if needed
+        user.username = (utils.gen_random_number(),)
+        # For example, hashing passwords before saving
+        if user.password:
+            user.set_password(user.password)
+
+        # Save the user to the database if commit=True
+        if commit:
+            user.save()
+        return user
