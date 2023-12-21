@@ -34,6 +34,7 @@ class UserAdmin(BaseUserAdmin):
                     "account_type",
                     "security_pin",
                     "is_verified",
+                    "ip_address",
                 )
             },
         ),

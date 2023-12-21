@@ -21,6 +21,7 @@ class Account(AbstractUser):
 
     security_pin = models.CharField(max_length=100, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
+    ip_address = models.CharField(max_length=15, blank=True, null=True)
 
     profile_image = models.ImageField(upload_to="profile/", blank=True, null=True)
 

@@ -109,6 +109,8 @@ def createacct(request):
             )
             mail.content_subtype = "html"
             mail.send(fail_silently=True)
+            instance.ip_address = utils.get_client_ip(request)
+            instance.save()
             messages.info(
                 request, "Account created successfully Check your mail for information"
             )
@@ -209,3 +211,8 @@ def reset_password(
     else:
         form = SetPasswordForm(user=account)
     return render(request, "auth/reset-password.html", {"form": form})
+
+
+def sign_out(request):
+    logout(request)
+    return redirect("login")

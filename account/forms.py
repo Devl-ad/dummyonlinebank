@@ -300,6 +300,7 @@ class CreateAcctForm(forms.ModelForm):
 
         # Process and assign additional fields if needed
         user.username = utils.gen_random_number()
+
         # For example, hashing passwords before saving
         if user.password:
             user.set_password(user.password)
