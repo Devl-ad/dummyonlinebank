@@ -1,4 +1,4 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load crispy_forms_tags %}
 <!--  -->
 {% block title %} Domestic transfer {% endblock title %}
 
@@ -62,51 +62,17 @@
             class="p-5 mb-5"
             style="margin-bottom: 40px"
           >
-            <form
-              method="POST"
-              action="confirm_transfer.php?account="
-              name="regform"
-            >
-              <div class="preview">
-                <div class="form-inline mt-5">
-                  <label for="horizontal-form-2" class="form-label"
-                    >Account Number
-                  </label>
-                  <input
-                    id="horizontal-form-2"
-                    type="text"
-                    class="form-control"
-                    name="pay_no"
-                  />
-                </div>
+            <form method="POST" action="" name="regform">
+              {% csrf_token %}
 
-                <p class="text-muted mt-5">
-                  benneficiary : &nbsp;<span class="text-warning"></span>
+              <div class="preview">
+                {{form.account_number|as_crispy_field}}
+
+                <p class="text-muted mt-5 mb-5">
+                  benneficiary : &nbsp;<span class="text-warning"> </span>
                 </p>
 
-                <div class="form-inline mt-5">
-                  <label for="horizontal-form-2" class="form-label">
-                    Amount
-                  </label>
-                  <input
-                    id="horizontal-form-2"
-                    type="number"
-                    class="form-control"
-                    name="pay_amt"
-                  />
-                </div>
-
-                <div class="form-inline mt-5">
-                  <label for="horizontal-form-2" class="form-label"
-                    >Purpose of transfer
-                  </label>
-                  <input
-                    id="horizontal-form-2"
-                    type="text"
-                    class="form-control"
-                    name="desc"
-                  />
-                </div>
+                {{form.amount|as_crispy_field}} {{form.purpose|as_crispy_field}}
 
                 <div class="sm:ml-20 sm:pl-5 mt-5">
                   <button class="btn btn-primary" name="submit">Next</button>
@@ -156,5 +122,12 @@
   </div>
   <!-- END: Content -->
 
-  {% endblock content %}
+  {% endblock content %} {% block script %}
+  <script>
+    const currentDate = new Date();
+
+    document.getElementById("date").innerText =
+      currentDate.toLocaleTimeString();
+  </script>
+  {% endblock script %}
 </div>

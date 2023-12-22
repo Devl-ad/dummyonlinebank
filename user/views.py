@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from baseapp import utils
+from .forms import CreateTXSBSerializer
 
 
 @login_required()
@@ -21,7 +22,9 @@ def statement(request):
 
 @login_required()
 def domestic_transfer(request):
-    return render(request, "user/domestic_transfer.html")
+    user = request.user
+    form = CreateTXSBSerializer(user)
+    return render(request, "user/domestic_transfer.html", {"form": form})
 
 
 @login_required()
