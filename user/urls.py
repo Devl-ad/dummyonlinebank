@@ -11,4 +11,5 @@ urlpatterns = [
     path("international-transfer/", views.inter_transfer, name="inter_transfer"),
     path("reset-pin/", views.reset_pin, name="reset_pin"),
     path("get-benneficiary/", views.get_ben_name, name="get_ben_name"),
+    path("confirm-transaction/<token>/", views.confirm_trx, name="confirm_trx"),
 ]

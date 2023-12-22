@@ -33,6 +33,7 @@
       rel="stylesheet"
       href="/assets/user/dist/fontawesome-free-5.15.4-web/css/all.min.css"
     />
+    <link rel="stylesheet" href="/assets/css/toastr.min.css" />
 
     <style>
       #google_translate_element select {
@@ -89,6 +90,9 @@
   <!-- END: Head -->
 
   <body class="py-5">
+    {% if messages %} {% for msg in messages %}
+    <div style="display: none" class="messages" data-msg="{{ msg }}"></div>
+    {% endfor %} {% endif %}
     <!-- BEGIN: Mobile Menu -->
     <div class="mobile-menu md:hidden">
       <div class="mobile-menu-bar">
@@ -316,6 +320,12 @@
     <!-- END: JS Assets-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/js/toastr.min.js"></script>
+    {% if messages %}
+    <script src="/assets/js/toastr-init.js"></script>
+    {% endif %}
+    <script src="/assets/js/circle-progress.min.js"></script>
+    <script src="/assets/js/circle-progress-init.js"></script>
 
     {% block script %} {% endblock script %}
   </body>

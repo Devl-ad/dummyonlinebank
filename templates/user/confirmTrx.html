@@ -1,6 +1,6 @@
-{% extends 'layouts/user.html' %} {% load crispy_forms_tags %}
+{% extends 'layouts/user.html' %}
 <!--  -->
-{% block title %} Domestic transfer {% endblock title %}
+{% block title %} Confirm transaction {% endblock title %}
 
 <!--  -->
 {% block content %}
@@ -49,9 +49,7 @@
           <div
             class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
           >
-            <h2 class="font-medium text-base mr-auto">
-              Transfer to the same bank
-            </h2>
+            <h2 class="font-medium text-base mr-auto">Confirm transaction</h2>
             <div
               class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0"
             ></div>
@@ -59,46 +57,37 @@
 
           <div
             id="horizontal-form"
-            class="p-5 mb-5"
+            class="p-5 mb-5 text-center mt-5"
             style="margin-bottom: 40px"
           >
-            <form method="POST" action="" name="regform">
-              {% csrf_token %} {{form.type|as_crispy_field}}
+            <form action="" method="post">
+              {% csrf_token %}
+              <h3 style="font-size: 20px; font-weight: 700; line-height: 32px">
+                Please Confirm that you want to Transfer
+                <span class="text-danger">${{amount}} </span> to <br />
+                <span class="text-primary">samuel aniekan samuel</span>
+              </h3>
 
-              <div class="preview">
-                {{form.account_number|as_crispy_field}}
+              <div class="mb-3 mt-5">
+                <input
+                  type="text"
+                  name="security_pin"
+                  class="form-control textinput"
+                  placeholder="Input Your Security Pin"
+                  maxlength="4"
+                  minlength="4"
+                  required=""
+                  id="security_pin"
+                />
+              </div>
+              <div style="display: none">{{form}}</div>
 
-                <p class="text-muted mt-5 mb-5">
-                  benneficiary : &nbsp;<span class="text-success" id="benName">
-                  </span>
-                </p>
-
-                {{form.amount|as_crispy_field}} {{form.purpose|as_crispy_field}}
-
-                <div class="sm:ml-20 sm:pl-5 mt-5">
-                  <button
-                    class="btn btn-primary"
-                    disabled
-                    id="submitBtn"
-                    name="submit"
-                  >
-                    Next
-                  </button>
-                </div>
+              <div class="sm:ml-20 sm:pl-5 mt-5">
+                <button class="btn btn-danger" name="submit">Confirm</button>
               </div>
             </form>
           </div>
           <!-- END: Daily Sales -->
-          <!-- BEGIN: Announcement -->
-          <div class="intro-y box col-span-12 2xl:col-span-6"></div>
-          <!-- END: Announcement -->
-          <!-- BEGIN: Projects -->
-
-          <!-- END: Projects -->
-
-          <!-- BEGIN: General Statistics -->
-
-          <!-- END: General Statistics -->
         </div>
       </div>
 
@@ -130,33 +119,5 @@
   </div>
   <!-- END: Content -->
 
-  {% endblock content %} {% block script %}
-  <script>
-    let submitDisable = true;
-    let csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
-    let benneficiaryName = document.getElementById("benName");
-    let submitBtn = document.getElementById("submitBtn");
-
-    document
-      .getElementById("id_account_number")
-      .addEventListener("change", ({ target }) => {
-        axios
-          .get(`/get-benneficiary/?acc_number=${target.value}`)
-          .then(function ({ data }) {
-            // console.log(data);
-            if (!data.error) {
-              benneficiaryName.innerHTML = `<code>${data.name}</code>`;
-              submitBtn.removeAttribute("disabled");
-            } else {
-              benneficiaryName.innerHTML = ``;
-              submitBtn.setAttribute("disabled", "disabled");
-            }
-          })
-          .catch(function (error) {
-            // Handle error
-            console.error("Error fetching data:", error);
-          });
-      });
-  </script>
-  {% endblock script %}
+  {% endblock content %}
 </div>

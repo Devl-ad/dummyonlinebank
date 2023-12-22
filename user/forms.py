@@ -47,9 +47,18 @@ class CreateTXSBSerializer(forms.ModelForm):
         required=True,
     )
 
+    type = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "type": "hidden",
+            }
+        ),
+        required=True,
+    )
+
     class Meta:
         model = Transactions
-        fields = ["account_number", "amount", "purpose"]
+        fields = ["account_number", "amount", "purpose", "type"]
 
     def __init__(self, sender, *args, **kwargs):
         self.sender = sender
@@ -72,21 +81,21 @@ class CreateTXSBSerializer(forms.ModelForm):
     def save(self, commit=True):
         transaction = super(CreateTXSBSerializer, self).save(commit=False)
 
-        pk = self.cleaned_data["beneficiary"]
-        receiver = Account.objects.get(pk=pk)
+        acct_num = self.cleaned_data["account_number"]
+        receiver = Account.objects.get(username=acct_num)
 
-        transaction.sender = (self.sender,)
-        transaction.receiver = (receiver,)
-        transaction.purpose = (self.cleaned_data["purpose"],)
-        transaction.bank_name = ("Heritage",)
-        transaction.type = ("Local transfer",)
-        transaction.invoiceRef = (ref_code(),)
-        transaction.amount = (self.cleaned_data["amount"],)
-        transaction.ben_acct = (self.cleaned_data["account_number"],)
-        transaction.date = (timezone.now(),)
+        transaction.sender = self.sender
+        transaction.receiver = receiver
+        transaction.purpose = self.cleaned_data["purpose"]
+        transaction.bank_name = "Heritage"
+        transaction.type = "Local transfer"
+        transaction.invoiceRef = ref_code()
+        transaction.amount = int(self.cleaned_data["amount"])
+        transaction.ben_acct = self.cleaned_data["account_number"]
+        transaction.date = timezone.now()
 
         if commit:
             transaction.save()
-            transaction.sender.balance -= transaction.amount
+            transaction.sender.balance -= int(transaction.amount)
             transaction.sender.save()
         return transaction
