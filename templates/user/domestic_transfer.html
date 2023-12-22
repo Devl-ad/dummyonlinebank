@@ -69,13 +69,21 @@
                 {{form.account_number|as_crispy_field}}
 
                 <p class="text-muted mt-5 mb-5">
-                  benneficiary : &nbsp;<span class="text-warning"> </span>
+                  benneficiary : &nbsp;<span class="text-success" id="benName">
+                  </span>
                 </p>
 
                 {{form.amount|as_crispy_field}} {{form.purpose|as_crispy_field}}
 
                 <div class="sm:ml-20 sm:pl-5 mt-5">
-                  <button class="btn btn-primary" name="submit">Next</button>
+                  <button
+                    class="btn btn-primary"
+                    disabled
+                    id="submitBtn"
+                    name="submit"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
             </form>
@@ -124,10 +132,31 @@
 
   {% endblock content %} {% block script %}
   <script>
-    const currentDate = new Date();
+    let submitDisable = true;
+    let csrfmiddlewaretoken = $('input[name="csrfmiddlewaretoken"]').val();
+    let benneficiaryName = document.getElementById("benName");
+    let submitBtn = document.getElementById("submitBtn");
 
-    document.getElementById("date").innerText =
-      currentDate.toLocaleTimeString();
+    document
+      .getElementById("id_account_number")
+      .addEventListener("change", ({ target }) => {
+        axios
+          .get(`/get-benneficiary/?acc_number=${target.value}`)
+          .then(function ({ data }) {
+            // console.log(data);
+            if (!data.error) {
+              benneficiaryName.innerHTML = `<code>${data.name}</code>`;
+              submitBtn.removeAttribute("disabled");
+            } else {
+              benneficiaryName.innerHTML = ``;
+              submitBtn.setAttribute("disabled", "disabled");
+            }
+          })
+          .catch(function (error) {
+            // Handle error
+            console.error("Error fetching data:", error);
+          });
+      });
   </script>
   {% endblock script %}
 </div>
