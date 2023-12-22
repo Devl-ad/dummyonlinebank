@@ -9,4 +9,5 @@ urlpatterns = [
     path("confirm-mail/", views.confirm_mail, name="confirm_mail"),
     path("forgot-password/", views.forgot_password, name="forgot_password"),
     path("reset-password/<uidb64>/", views.reset_password, name="reset_password"),
+    path("2fa-authenticate/", views.two_factor_authenticate, name="2fa-authenticate"),
 ]

@@ -75,6 +75,15 @@
       };
     </script>
 
+    <style>
+      @media (max-width: 767px) {
+        .intro-x.dropdown.w-8.h-8 {
+          position: absolute;
+          right: 10px;
+        }
+      }
+    </style>
+
     <!-- END: CSS Assets-->
   </head>
   <!-- END: Head -->
@@ -305,5 +314,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG7gNHAhDzgYmq4-EHvM4bqW1DNj2UCuk&libraries=places"></script>
     <script src="/assets/user/dist/js/app.js"></script>
     <!-- END: JS Assets-->
+    {% block script %} {% endblock script %}
   </body>
 </html>

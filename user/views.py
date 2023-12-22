@@ -5,6 +5,7 @@ from baseapp import utils
 
 @login_required()
 def index(request):
+    # print(utils.get_client_ip(request))
     return render(request, "user/index.html")
 
 

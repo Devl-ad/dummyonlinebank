@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Transactions, InternationalDetails
+
+admin.site.register(Transactions)
+admin.site.register(InternationalDetails)

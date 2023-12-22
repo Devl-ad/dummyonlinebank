@@ -18,7 +18,7 @@
     <!-- END: Breadcrumb -->
     <!-- BEGIN: Search -->
     <div class="intro-x relative mr-3 sm:mr-6">
-      <div id="google_translate_element"></div>
+      <!-- <div id="google_translate_element"></div> -->
 
       <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -29,10 +29,10 @@
         }
       </script>
 
-      <script
+      <!-- <script
         type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      ></script>
+      ></script> -->
     </div>
     <!-- END: Search -->
     <!-- BEGIN: Notifications -->
@@ -70,7 +70,7 @@
             <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />'
           </div>
           <div class="ml-4 mr-auto">
-            <div class="font-medium text-base">Trinh Nita Nata</div>
+            <div class="font-medium text-base">{{user.get_fullname}}</div>
             <div class="text-slate-500">Personal Online Banking</div>
           </div>
         </div>
@@ -78,16 +78,16 @@
         <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
           <a class="flex items-center text-primary font-medium" href="">
             <i data-lucide="activity" class="w-4 h-4 mr-2"></i> Account No:
-            4632124354
+            {{user.username}}
           </a>
           <a class="flex items-center text-primary mt-5" href="">
             <i data-lucide="mail" class="w-4 h-4 mr-2"></i> Email:
-            nitatrinh97@gmail.com
+            {{user.email}}
           </a>
 
           <a class="flex items-center text-primary mt-5" href="">
             <i data-lucide="phone" class="w-4 h-4 mr-2"></i> Mobile No:
-            08052545567
+            {{user.phone_number}}
           </a>
         </div>
 
@@ -117,7 +117,7 @@
         <div class="mt-4">
           Sign up offer requires you to deposit and maintain a minimum balance
           in order to earn the &#163;520 bonus. For enquiries send us an email
-          accounts@heritagesaving.online
+          support@{{domain}}
         </div>
         <div class="font-medium flex mt-5"></div>
       </div>
@@ -157,10 +157,10 @@
                 </tr>
 
                 <tr>
-                  <td>Trinh Nita Nata</td>
-                  <td>4632124354</td>
+                  <td>{{user.get_fullname}}</td>
+                  <td>{{user.username}}</td>
 
-                  <td>&#163; 0.00</td>
+                  <td>&#163; {{user.balance}}</td>
                 </tr>
               </table>
             </div>
@@ -229,7 +229,7 @@
                   <div
                     class="border-l-2 border-primary dark:border-primary pl-4"
                   >
-                    <a href="acc_statements.php" class="font-medium"
+                    <a href="/transactions-log" class="font-medium"
                       >VIEW MORE</a
                     >
                   </div>

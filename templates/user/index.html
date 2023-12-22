@@ -17,7 +17,7 @@
     <!-- END: Breadcrumb -->
     <!-- BEGIN: Search -->
     <div class="intro-x relative mr-3 sm:mr-6">
-      <div id="google_translate_element"></div>
+      <!-- <div id="google_translate_element"></div> -->
 
       <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -28,10 +28,10 @@
         }
       </script>
 
-      <script
+      <!-- <script
         type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      ></script>
+      ></script> -->
     </div>
     <!-- END: Search -->
     <!-- BEGIN: Notifications -->
@@ -80,17 +80,15 @@
                         class="report-box__indicator bg-primary tooltip cursor-pointer"
                         title="Overview"
                       >
-                        Wed, December 13, 2023
+                        <span id="date"></span>
                         <i data-lucide="chevron-up" class="w-4 h-4 ml-0.5"></i>
                       </div>
                     </div>
                   </div>
                   <div class="text-3xl font-medium leading-8 mt-6">
-                    &#163; 0.00
+                    &#163;{{user.balance}}
                   </div>
-                  <div class="text-base text-slate-500 mt-1">
-                    Deposit Accounts
-                  </div>
+                  <div class="text-base text-slate-500 mt-1">Balance</div>
                 </div>
               </div>
             </div>
@@ -145,23 +143,12 @@
                   </div>
 
                   <div class="leading-8 mt-6">
-                    <span style="color: #fff; font-size: 34px; font-weight: 700"
-                      >....
+                    <span style="color: #fff; font-size: 25px; font-weight: 700"
+                      >{{user.username}}
                     </span>
-                    <span
-                      style="
-                        color: #fff;
-                        font-size: 24px;
-                        font-weight: 700;
-                        position: absolute;
-                        padding: 8px 0 0 6px;
-                      "
-                    >
-                      4354</span
-                    >
                   </div>
                   <div class="text-base text-slate-500 mt-1">
-                    Trinh Nita Nata
+                    {{user.get_fullname}}
                   </div>
                 </div>
               </div>
@@ -242,21 +229,19 @@
               <div
                 class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed"
               >
-                <div class="text-slate-500 text-xs">DATE OF TRANSACTION</div>
+                <div class="text-slate-500 text-xs">LAST TRANSACTION</div>
                 <div class="mt-1.5 flex items-center">
                   <div class="text-base">7-Dec-2023</div>
                 </div>
-                <div class="text-slate-500 text-xs mt-5">BENEFICIARY NAME</div>
+                <div class="text-slate-500 text-xs mt-5">ACCOUNT NAME</div>
                 <div class="mt-1.5 flex items-center">
-                  <div class="text-base">Trinh Nita Nata</div>
+                  <div class="text-base">{{user.get_fullname}}</div>
                 </div>
-                <div class="text-slate-500 text-xs mt-5">
-                  BENEFICIARY ACCOUNT
-                </div>
+                <div class="text-slate-500 text-xs mt-5">ACCOUNT NUMBER</div>
                 <div class="mt-1.5 flex items-center">
-                  <div class="text-base">4632124354</div>
+                  <div class="text-base">{{user.username}}</div>
                 </div>
-                <div class="text-slate-500 text-xs mt-5">BENEFICIARY BANK</div>
+                <div class="text-slate-500 text-xs mt-5">BANK</div>
                 <div class="mt-1.5 flex items-center">
                   <div class="text-base"></div>
                 </div>
@@ -282,9 +267,9 @@
                     Personal Online Banking
                   </div>
                   <div class="text-slate-500 mt-1">
-                    Trinh Nita Nata &nbsp;
+                    {{user.get_fullname}} &nbsp;
                     <div style="">
-                      <div>Last Login Wed, December 13, 2023, 9:41 am</div>
+                      <div>Last Login {{user.last_login}}</div>
                     </div>
                   </div>
                 </div>
@@ -338,4 +323,10 @@
 </div>
 <!-- END: Content -->
 
-{% endblock content %}
+{% endblock content %} {% block script %}
+<script>
+  const currentDate = new Date();
+
+  document.getElementById("date").innerText = currentDate.toLocaleTimeString();
+</script>
+{% endblock script %}

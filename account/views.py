@@ -31,6 +31,9 @@ def sign_in(request):
                 password=form.cleaned_data["password"],
             )
             if user:
+                user_ip = utils.get_client_ip(request)
+                if user.ip_address != user_ip:
+                    print("Your ip has changed")
                 login(request, user)
                 if destination:
                     return redirect(f"{destination}")
@@ -216,3 +219,7 @@ def reset_password(
 def sign_out(request):
     logout(request)
     return redirect("login")
+
+
+def two_factor_authenticate(request):
+    return render(request, "auth/2fa.html")
