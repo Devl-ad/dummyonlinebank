@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from baseapp import utils as baseUtils
 from .utils import getTxForm
 import uuid
-from .forms import CreateTXSBSerializer
+from .forms import CreateTXSBSerializer, CreateTXOBSerializer
 from account.models import Account
 from django.http import JsonResponse
 from django.core.cache import cache
@@ -33,14 +33,19 @@ def domestic_transfer(request):
     if request.POST:
         form = CreateTXSBSerializer(user, request.POST)
         if form.is_valid():
+            instance = form.save(commit=False)
             if user.balance >= int(form.cleaned_data.get("amount")):
                 token = str(uuid.uuid4())
                 cache_key = f"confirm_transfer_{token}"
+                ben_cache_key = f"benneficiary_name_{token}"
                 data = cache.get(cache_key)
-                if data:
+                dataii = cache.get(ben_cache_key)
+                if data and dataii:
                     cache.delete(cache_key)
-
+                    cache.delete(ben_cache_key)
                 cache.set(cache_key, form.cleaned_data, timeout=600)
+                cache.set(ben_cache_key, instance.receiver.get_fullname(), timeout=600)
+
                 return redirect("confirm_trx", token)
             else:
                 messages.info(request, "Insufficient Funds")
@@ -53,7 +58,31 @@ def domestic_transfer(request):
 
 @login_required()
 def outside_transfer(request):
-    return render(request, "user/outside_transfer.html")
+    user = request.user
+    if request.POST:
+        form = CreateTXOBSerializer(user, request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            if user.balance >= int(form.cleaned_data.get("amount")):
+                full_name = f"{instance.interDetail.first_name} {instance.interDetail.last_name}"
+                token = str(uuid.uuid4())
+                cache_key = f"confirm_transfer_{token}"
+                ben_cache_key = f"benneficiary_name_{token}"
+                data = cache.get(cache_key)
+                dataii = cache.get(ben_cache_key)
+                if data and dataii:
+                    cache.delete(cache_key)
+                    cache.delete(ben_cache_key)
+                cache.set(cache_key, form.cleaned_data, timeout=600)
+                cache.set(ben_cache_key, full_name, timeout=600)
+
+                return redirect("confirm_trx", token)
+            else:
+                messages.info(request, "Insufficient Funds")
+                return redirect("outside_transfer")
+    else:
+        form = CreateTXOBSerializer(user, initial={"type": "OB"})
+    return render(request, "user/outside_transfer.html", {"form": form})
 
 
 @login_required()
@@ -83,9 +112,11 @@ def get_ben_name(request):
 def confirm_trx(request, token):
     user = request.user
     cache_key = f"confirm_transfer_{token}"
+    ben_cache_key = f"benneficiary_name_{token}"
+    benneficiary_name = cache.get(ben_cache_key)
     cdata = cache.get(cache_key)
 
-    if not cdata:
+    if not cdata and not benneficiary_name:
         messages.info(request, "Invalid link")
         return redirect("dashboard")
     if user.balance < int(cdata["amount"]):
@@ -97,7 +128,7 @@ def confirm_trx(request, token):
         security_pin = request.POST.get("security_pin")
         form = formData(user, request.POST)
         if user.security_pin == security_pin:
-            print("TX created")
+            # print("TX created")
             cache.delete(cache_key)
             if form.is_valid():
                 form.save()
@@ -110,11 +141,16 @@ def confirm_trx(request, token):
                 return redirect("dashboard")
 
         else:
-            print("fuck u")
             messages.info(request, f"Invalid security pin")
             return redirect("confirm_trx", token)
     else:
         form = formData(user, initial=cdata)
     return render(
-        request, "user/confirmTrx.html", {"form": form, "amount": cdata["amount"]}
+        request,
+        "user/confirmTrx.html",
+        {
+            "form": form,
+            "amount": cdata["amount"],
+            "benneficiary_name": benneficiary_name,
+        },
     )

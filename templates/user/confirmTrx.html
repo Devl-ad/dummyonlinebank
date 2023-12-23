@@ -64,8 +64,11 @@
               {% csrf_token %}
               <h3 style="font-size: 20px; font-weight: 700; line-height: 32px">
                 Please Confirm that you want to Transfer
-                <span class="text-danger">${{amount}} </span> to <br />
-                <span class="text-primary">samuel aniekan samuel</span>
+                <span class="text-danger">${{amount}} </span> <br />
+                to <br />
+                <span class="text-primary"
+                  ><code>{{benneficiary_name}}</code>
+                </span>
               </h3>
 
               <div class="mb-3 mt-5">

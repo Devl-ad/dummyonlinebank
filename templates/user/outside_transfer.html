@@ -1,4 +1,4 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load crispy_forms_tags %}
 <!--  -->
 {% block title %} transfer to other bank{% endblock title %}
 
@@ -62,94 +62,8 @@
             class="p-5 mb-5"
             style="margin-bottom: 40px"
           >
-            <form
-              method="POST"
-              action="confirm_transfer.php?account="
-              name="regform"
-            >
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >First Name
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="fname"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Last Name
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="lname"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Beneficiary account number
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="number"
-                  class="form-control"
-                  name="pay_no"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Bank Name
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="bank_name"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label">
-                  ABA Routing Number
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="desc"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label">
-                  Amount
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="pay_amt"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Purpose of transfer
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="desc"
-                />
-              </div>
+            <form method="POST" action="" name="regform">
+              {% csrf_token %} {{form|crispy}}
 
               <div class="sm:ml-20 sm:pl-5 mt-5">
                 <button class="btn btn-primary" name="submit">Next</button>
