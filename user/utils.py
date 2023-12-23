@@ -1,4 +1,4 @@
-from user.forms import CreateTXSBSerializer, CreateTXOBSerializer
+from user.forms import CreateTXSBSerializer, CreateTXOBSerializer, CreateTXInSerializer
 
 
 def getTxForm(type):
@@ -7,6 +7,6 @@ def getTxForm(type):
     elif type == "OB":
         return CreateTXOBSerializer
     elif type == "IN":
-        return "Inter bak"
+        return CreateTXInSerializer
     else:
         return None

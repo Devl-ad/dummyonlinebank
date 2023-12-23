@@ -1,4 +1,4 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load crispy_forms_tags %}
 <!--  -->
 {% block title %} International transfer {% endblock title %}
 
@@ -62,128 +62,42 @@
             class="p-5 mb-5"
             style="margin-bottom: 40px"
           >
-            <form
-              method="POST"
-              action="confirm_transfer.php?account="
-              name="regform"
-            >
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >First Name
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="fname"
-                />
+            <form method="POST" action="" name="regform">
+              {% csrf_token %}
+              <div
+                class="rbox"
+                style="border: 1px solid rgb(143, 151, 143); padding: 20px"
+              >
+                <h3
+                  style="font-size: 20px; font-weight: 700; margin-bottom: 10px"
+                >
+                  Recievers Details
+                </h3>
+
+                {{form.first_name|as_crispy_field}}
+                {{form.last_name|as_crispy_field}}
+                {{form.email|as_crispy_field}} {{form.city|as_crispy_field}}
+                {{form.country|as_crispy_field}}
               </div>
 
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Last Name
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="lname"
-                />
+              <div
+                class="rbox mt-3 mb-3"
+                style="border: 1px solid rgb(143, 151, 143); padding: 20px"
+              >
+                <h3
+                  style="font-size: 20px; font-weight: 700; margin-bottom: 10px"
+                >
+                  Recievers Bank Details
+                </h3>
+
+                {{form.bank_name|as_crispy_field}}
+                {{form.ben_account_number|as_crispy_field}}
+                {{form.swift_code|as_crispy_field}}
+                {{form.iban_number|as_crispy_field}}
               </div>
 
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label">City </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="city"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Country
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="Country"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Beneficiary account number
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="number"
-                  class="form-control"
-                  name="pay_no"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >IBAN Number
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="number"
-                  class="form-control"
-                  name="iban"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Bank Name
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="bank_name"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label">
-                  Swift/BIC Code
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="bic"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label">
-                  Amount
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="pay_amt"
-                />
-              </div>
-
-              <div class="form-inline mt-5">
-                <label for="horizontal-form-2" class="form-label"
-                  >Purpose of transfer
-                </label>
-                <input
-                  id="horizontal-form-2"
-                  type="text"
-                  class="form-control"
-                  name="desc"
-                />
-              </div>
+              {{form.amount|as_crispy_field}} {{form.purpose|as_crispy_field}}
+              {{form.type|as_crispy_field}}
 
               <div class="sm:ml-20 sm:pl-5 mt-5">
                 <button class="btn btn-primary" name="submit">Next</button>

@@ -263,3 +263,209 @@ class CreateTXOBSerializer(forms.ModelForm):
             transaction.sender.save()
 
         return transaction
+
+
+class CreateTXInSerializer(forms.ModelForm):
+    email = forms.EmailField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "email",
+                "class": "form-control",
+                "placeholder": "Email",
+            }
+        ),
+        label=" Email",
+        required=True,
+    )
+    first_name = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "First name",
+                "autocomplete": False,
+            }
+        ),
+        label="First Name",
+        required=True,
+    )
+
+    last_name = forms.CharField(
+        max_length=80,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Last Name",
+                "autocomplete": False,
+            }
+        ),
+        label="Last Name",
+        required=True,
+    )
+
+    ben_account_number = forms.CharField(
+        required=True,
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Account Number",
+                "autocomplete": False,
+            }
+        ),
+        label="Account Number",
+    )
+
+    bank_name = forms.CharField(
+        required=True,
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Bank Name",
+                "autocomplete": False,
+            }
+        ),
+        label="Bank Name",
+    )
+
+    amount = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "type": "number",
+                "class": "form-control",
+                "placeholder": "Amount",
+                "min": 10,
+            }
+        ),
+        label="Amount",
+        required=True,
+    )
+
+    purpose = forms.CharField(
+        max_length=100,
+        min_length=5,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Purpose",
+            }
+        ),
+        label="Purpose",
+        required=True,
+    )
+
+    type = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "type": "hidden",
+            }
+        ),
+        required=True,
+    )
+
+    swift_code = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "SWift Code",
+            }
+        ),
+        label="SWift/BIC",
+        required=True,
+    )
+    iban_number = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "IBAN Number",
+            }
+        ),
+        label="IBAN Number",
+        required=True,
+    )
+
+    city = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "City",
+            }
+        ),
+        label="City",
+        required=True,
+    )
+
+    country = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Country",
+            }
+        ),
+        label="Country",
+        required=True,
+    )
+
+    class Meta:
+        model = Transactions
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "ben_account_number",
+            "bank_name",
+            "swift_code",
+            "iban_number",
+            "city",
+            "country",
+            "amount",
+            "purpose",
+            "type",
+        ]
+
+    def __init__(self, sender, *args, **kwargs):
+        self.sender = sender
+        super(CreateTXInSerializer, self).__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        transaction = super(CreateTXInSerializer, self).save(commit=False)
+
+        transaction.sender = self.sender
+        transaction.purpose = self.cleaned_data["purpose"]
+        transaction.bank_name = self.cleaned_data["bank_name"]
+        transaction.type = "International"
+        transaction.invoiceRef = ref_code()
+        transaction.amount = self.cleaned_data["amount"]
+        transaction.ben_acct = self.cleaned_data["ben_account_number"]
+        transaction.date = timezone.now()
+
+        details = InternationalDetails.objects.create(
+            first_name=self.cleaned_data["first_name"],
+            last_name=self.cleaned_data["last_name"],
+            country=self.cleaned_data["country"],
+            city=self.cleaned_data["city"],
+            iban_number=self.cleaned_data["iban_number"],
+            bic_code=self.cleaned_data["swift_code"],
+        )
+        transaction.interDetail = details
+        if commit:
+            transaction.save()
+            transaction.sender.balance -= int(transaction.amount)
+            transaction.sender.save()
+
+        return transaction

@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from baseapp import utils as baseUtils
 from .utils import getTxForm
 import uuid
-from .forms import CreateTXSBSerializer, CreateTXOBSerializer
+from .forms import CreateTXSBSerializer, CreateTXOBSerializer, CreateTXInSerializer
 from account.models import Account
 from django.http import JsonResponse
 from django.core.cache import cache
@@ -87,7 +87,32 @@ def outside_transfer(request):
 
 @login_required()
 def inter_transfer(request):
-    return render(request, "user/inter_transfer.html")
+    user = request.user
+    if request.POST:
+        form = CreateTXInSerializer(user, request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            if user.balance >= int(form.cleaned_data.get("amount")):
+                full_name = f"{instance.interDetail.first_name} {instance.interDetail.last_name}"
+                token = str(uuid.uuid4())
+                cache_key = f"confirm_transfer_{token}"
+                ben_cache_key = f"benneficiary_name_{token}"
+                data = cache.get(cache_key)
+                dataii = cache.get(ben_cache_key)
+                if data and dataii:
+                    cache.delete(cache_key)
+                    cache.delete(ben_cache_key)
+                cache.set(cache_key, form.cleaned_data, timeout=600)
+                cache.set(ben_cache_key, full_name, timeout=600)
+
+                return redirect("confirm_trx", token)
+            else:
+                messages.info(request, "Insufficient Funds")
+                return redirect("inter_transfer")
+        print(form.errors)
+    else:
+        form = CreateTXInSerializer(user, initial={"type": "IN"})
+    return render(request, "user/inter_transfer.html", {"form": form})
 
 
 @login_required()
