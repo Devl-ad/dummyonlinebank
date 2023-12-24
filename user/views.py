@@ -4,7 +4,12 @@ from django.views.decorators.csrf import csrf_exempt
 from baseapp import utils as baseUtils
 from .utils import getTxForm
 import uuid
-from .forms import CreateTXSBSerializer, CreateTXOBSerializer, CreateTXInSerializer
+from .forms import (
+    CreateTXSBSerializer,
+    CreateTXOBSerializer,
+    CreateTXInSerializer,
+    ChangePinForm,
+)
 from account.models import Account
 from .models import Transactions
 from django.http import JsonResponse
@@ -15,8 +20,12 @@ from django.db.models import Q
 
 @login_required()
 def index(request):
-    # print(utils.get_client_ip(request))
-    return render(request, "user/index.html")
+    user = request.user
+    last_transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))[
+        :1
+    ]
+
+    return render(request, "user/index.html", {"last_transactions": last_transactions})
 
 
 @login_required()
@@ -136,7 +145,18 @@ def inter_transfer(request):
 
 @login_required()
 def reset_pin(request):
-    return render(request, "user/reset-pin.html")
+    user = request.user
+    if request.POST:
+        form = ChangePinForm(user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, "Your security pin has been changed")
+            return redirect("dashboard")
+        else:
+            print(form.errors)
+    else:
+        form = ChangePinForm(user)
+    return render(request, "user/reset-pin.html", {"form": form})
 
 
 def get_ben_name(request):

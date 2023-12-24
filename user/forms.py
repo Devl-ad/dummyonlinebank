@@ -470,3 +470,72 @@ class CreateTXInSerializer(forms.ModelForm):
             transaction.sender.save()
 
         return transaction
+
+
+class ChangePinForm(forms.ModelForm):
+    oldpin = forms.CharField(
+        max_length=4,
+        min_length=4,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Old pin",
+            }
+        ),
+        label="Old pin",
+        required=True,
+    )
+    newpin = forms.CharField(
+        max_length=4,
+        min_length=4,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "New pin",
+            }
+        ),
+        label="New pin",
+        required=True,
+    )
+
+    confirm_newpin = forms.CharField(
+        max_length=4,
+        min_length=4,
+        widget=forms.TextInput(
+            attrs={
+                "type": "text",
+                "class": "form-control",
+                "placeholder": "Confirm New pin",
+            }
+        ),
+        label="Confirm New pin",
+        required=True,
+    )
+
+    class Meta:
+        model = Account
+        fields = ["oldpin", "newpin", "confirm_newpin"]
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super(ChangePinForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        oldpin = cleaned_data.get("oldpin")
+        newpin = cleaned_data.get("newpin")
+        confirm_newpin = cleaned_data.get("confirm_newpin")
+        user = self.user
+
+        if oldpin and user.security_pin != oldpin:
+            self.add_error("oldpin", "Old Security pin doesn't match")
+
+        if newpin and user.security_pin == newpin:
+            self.add_error(
+                "newpin", "New Security pin must be different from the old one"
+            )
+
+        if newpin and confirm_newpin and newpin != confirm_newpin:
+            self.add_error("confirm_newpin", "New Security pin doesn't match")

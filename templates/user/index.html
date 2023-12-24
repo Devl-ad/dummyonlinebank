@@ -231,7 +231,9 @@
               >
                 <div class="text-slate-500 text-xs">LAST TRANSACTION</div>
                 <div class="mt-1.5 flex items-center">
-                  <div class="text-base">7-Dec-2023</div>
+                  <div class="text-base">
+                    {% for obj in last_transactions %} {{obj.date}} {% endfor %}
+                  </div>
                 </div>
                 <div class="text-slate-500 text-xs mt-5">ACCOUNT NAME</div>
                 <div class="mt-1.5 flex items-center">
