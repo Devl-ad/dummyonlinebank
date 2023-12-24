@@ -1,0 +1,277 @@
+{% extends 'layouts/user.html' %}
+<!--  -->
+{% block title %} Transactions History {% endblock title %} {% block style %}
+
+<style>
+  .txtDialogContent {
+    background: #fff;
+    width: 100%;
+    padding: 20px;
+    transition: all 0.3 ease-in-out;
+    overflow: hidden;
+  }
+
+  .txtDialogHead {
+    background-color: #f2f4f8;
+    padding: 10px 20px;
+  }
+
+  .txtDialogHead > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .txtDialogHead > div .txtDHname h4 {
+    font-size: 20px;
+    margin-bottom: 0;
+  }
+  @media (max-width: 767px) {
+  }
+</style>
+
+{% endblock style %}
+
+<!--  -->
+{% block content %}
+<!-- BEGIN: Content -->
+<div class="content">
+  <!-- BEGIN: Top Bar -->
+  <div class="top-bar">
+    <!-- BEGIN: Breadcrumb -->
+    <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Application</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      </ol>
+    </nav>
+    <!-- END: Breadcrumb -->
+
+    <!-- BEGIN: Notifications -->
+
+    <!-- END: Notifications -->
+    <!-- BEGIN: Account Menu -->
+    <div class="intro-x dropdown w-8 h-8">
+      <div
+        class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
+        role="button"
+        aria-expanded="false"
+        data-tw-toggle="dropdown"
+      >
+        <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />
+      </div>
+      <!-- dropdown -->
+      {% include 'components/user-profile-icon.html' %}
+      <!-- dropdown -->
+    </div>
+    <!-- END: Account Menu -->
+  </div>
+  <!-- END: Top Bar -->
+
+  <div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto"></h2>
+  </div>
+  <div class="d-flex mt-5">
+    <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+      <div class="grid grid-cols-12 gap-6">
+        <!-- BEGIN: Daily Sales -->
+        <div class="intro-y box col-span-12 2xl:col-span-6">
+          <div
+            class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
+          >
+            <h2 class="font-medium text-base mr-auto">Transactions history</h2>
+            <div
+              class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0"
+            ></div>
+          </div>
+
+          <div class="mb-5 text-center mt-5" style="margin-bottom: 40px">
+            <div class="txtDialogContent text-truncate">
+              <h5 class="text-center"></h5>
+              <div class="txtDialogHead">
+                <div>
+                  <div class="txtDHname text-truncate">
+                    <h4 class="">
+                      {% if send %}
+                      <small class="text-small text-muted"> Send to :</small>
+                      {% if transaction.interDetail %}
+                      {{transaction.interDetail.get_fullname}} {% else %}
+                      {{transaction.reciever.get_fullname}} {% endif %}
+                      <!--  -->
+                      {% else %}
+
+                      <small class="text-small text-muted">
+                        Received From :</small
+                      >
+                      {% if transaction.interDetail %}
+                      {{transaction.interDetail.get_fullname}} {% else %}
+                      {{transaction.sender.get_fullname}} {% endif %}
+                      <!--  -->
+                      {% endif %}
+                    </h4>
+                  </div>
+                </div>
+              </div>
+              <div class="txtDialogBody">
+                <table class="table">
+                  <thead></thead>
+                  <tbody>
+                    <tr>
+                      <td>Type</td>
+                      <td class="text-center">
+                        <span id="with-user">{{transaction.type}}</span>
+                      </td>
+                    </tr>
+                    {% if send %}
+                    <tr>
+                      <td>Beneficiary Acc Num</td>
+                      <td class="text-center">
+                        <span id="with-user"> {{transaction.ben_acct}} </span>
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td>Sender Acc Num</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.sender.username}}
+                        </span>
+                      </td>
+                    </tr>
+
+                    {% endif %} {% if transaction.interDetail %}
+                    <tr>
+                      <td>Full namme</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.interDetail.get_fullname}}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>email</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.interDetail.email}}
+                        </span>
+                      </td>
+                    </tr>
+
+                    {% if transaction.type == "International" %}
+                    <tr>
+                      <td>City</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.interDetail.city}}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Country</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.interDetail.country}}
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>Bic Code</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.interDetail.bic_code}}
+                        </span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>IBAN number</td>
+                      <td class="text-center">
+                        <span id="with-user">
+                          {{transaction.interDetail.iban_number}}
+                        </span>
+                      </td>
+                    </tr>
+                    {% endif %} {% endif %}
+                    <tr>
+                      <td>Bank name</td>
+                      <td class="text-center">
+                        <span id="with-user"> {{transaction.bank_name}} </span>
+                      </td>
+                    </tr>
+
+                    {% if transaction.route_num %}
+
+                    <tr>
+                      <td>Bank Route Number</td>
+                      <td class="text-center">
+                        <span id="with-user"> {{transaction.route_num}} </span>
+                      </td>
+                    </tr>
+
+                    {% endif %}
+                    <tr>
+                      <td>Amount</td>
+                      <td class="text-center text-danger">
+                        $<span id="with-amount">{{transaction.amount}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Date</td>
+                      <td class="text-center">
+                        <span id="with-date">{{transaction.date}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Description</td>
+                      <td class="text-center text-truncate text-muted">
+                        <span id="with-date">{{transaction.purpose}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td class="text-center">
+                        <span class="text-warning" id="with-status"
+                          >{{transaction.status}}</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- END: Daily Sales -->
+        </div>
+      </div>
+
+      <div class="col-span-12 sm:col-span-12 2xl:col-span-3 intro-y">
+        <div class="box p-5 zoom-in">
+          <div class="flex">
+            <div class="text-lg font-medium truncate mr-3"></div>
+
+            <div>
+              This site provides information about and access to services
+              offered by the Institution and all its respective affiliates or
+              partners.<br />
+              &copy;2022 All rights reserved.
+            </div>
+            <div
+              class="py-1 px-2 flex items-center rounded-full text-xs bg-slate-100 dark:bg-darkmode-400 text-slate-500 cursor-pointer ml-auto truncate"
+            >
+              <img
+                border="0"
+                src="/assets/img/logo_verisign.gif"
+                width="93"
+                height="52"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END: Content -->
+
+  {% endblock content %}
+</div>

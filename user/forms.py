@@ -461,6 +461,7 @@ class CreateTXInSerializer(forms.ModelForm):
             city=self.cleaned_data["city"],
             iban_number=self.cleaned_data["iban_number"],
             bic_code=self.cleaned_data["swift_code"],
+            email=self.cleaned_data["email"],
         )
         transaction.interDetail = details
         if commit:

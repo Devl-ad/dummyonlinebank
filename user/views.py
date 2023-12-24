@@ -33,8 +33,17 @@ def statement(request):
 
 @login_required()
 def statement_details(request, pk):
+    user = request.user
     transaction = get_object_or_404(Transactions, pk=pk)
-    return render(request, "user/statement-details.html", {"transaction": transaction})
+    if transaction.sender == user:
+        send = True
+    else:
+        send = False
+    return render(
+        request,
+        "user/statement-details.html",
+        {"transaction": transaction, "send": send},
+    )
 
 
 @login_required()
