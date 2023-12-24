@@ -231,7 +231,9 @@
                     <tr>
                       <td>Status</td>
                       <td class="text-center">
-                        <span class="text-warning" id="with-status"
+                        <span
+                          class="{% if transaction.status == 'PENDING' %} text-warning {% elif transaction.status == 'SUCCESS' %} text-success {% else %} text-danger {% endif %}"
+                          id="with-status"
                           >{{transaction.status}}</span
                         >
                       </td>
