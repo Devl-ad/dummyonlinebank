@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from baseapp import utils as baseUtils
@@ -6,9 +6,11 @@ from .utils import getTxForm
 import uuid
 from .forms import CreateTXSBSerializer, CreateTXOBSerializer, CreateTXInSerializer
 from account.models import Account
+from .models import Transactions
 from django.http import JsonResponse
 from django.core.cache import cache
 from django.contrib import messages
+from django.db.models import Q
 
 
 @login_required()
@@ -24,7 +26,15 @@ def account_details(request):
 
 @login_required()
 def statement(request):
-    return render(request, "user/statement.html")
+    user = request.user
+    transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))
+    return render(request, "user/statement.html", {"transactions": transactions})
+
+
+@login_required()
+def statement_details(request, pk):
+    transaction = get_object_or_404(Transactions, pk=pk)
+    return render(request, "user/statement-details.html", {"transaction": transaction})
 
 
 @login_required()

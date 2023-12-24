@@ -1,0 +1,215 @@
+{% extends 'layouts/user.html' %}
+<!--  -->
+{% block title %} Transactions History {% endblock title %} {% block style %}
+
+<style>
+  .trans-amount.truncate {
+    width: 67px;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  .in-trans-card {
+    width: 400px;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    height: 80px;
+    margin-bottom: 15px;
+    padding: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-shadow: 0 14px 25px #00000029;
+  }
+
+  .in-trans-card .trans-icon {
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    border-radius: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  .in-trans-card .trans-name {
+    width: 50%;
+  }
+  .in-trans-card .trans-name h4 {
+    margin-bottom: 0;
+    text-transform: capitalize;
+  }
+  .in-trans-card .trans-name p {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  .in-trans-card .trans-amount h4 {
+    margin-bottom: 5px;
+    font-size: 20px;
+  }
+
+  @media (max-width: 767px) {
+    .in-trans-card {
+      width: 320px;
+    }
+
+    .in-trans-card .trans-name h4 {
+      font-size: 15px;
+    }
+    .in-trans-card .trans-name p {
+      font-size: 10px;
+    }
+  }
+</style>
+
+{% endblock style %}
+
+<!--  -->
+{% block content %}
+<!-- BEGIN: Content -->
+<div class="content">
+  <!-- BEGIN: Top Bar -->
+  <div class="top-bar">
+    <!-- BEGIN: Breadcrumb -->
+    <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Application</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+      </ol>
+    </nav>
+    <!-- END: Breadcrumb -->
+
+    <!-- BEGIN: Notifications -->
+
+    <!-- END: Notifications -->
+    <!-- BEGIN: Account Menu -->
+    <div class="intro-x dropdown w-8 h-8">
+      <div
+        class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
+        role="button"
+        aria-expanded="false"
+        data-tw-toggle="dropdown"
+      >
+        <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />
+      </div>
+      <!-- dropdown -->
+      {% include 'components/user-profile-icon.html' %}
+      <!-- dropdown -->
+    </div>
+    <!-- END: Account Menu -->
+  </div>
+  <!-- END: Top Bar -->
+
+  <div class="intro-y flex items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto"></h2>
+  </div>
+  <div class="d-flex mt-5">
+    <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+      <div class="grid grid-cols-12 gap-6">
+        <!-- BEGIN: Daily Sales -->
+        <div class="intro-y box col-span-12 2xl:col-span-6">
+          <div
+            class="flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
+          >
+            <h2 class="font-medium text-base mr-auto">Transactions history</h2>
+            <div
+              class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0"
+            ></div>
+          </div>
+
+          <div
+            id="horizontal-form"
+            class="p-5 mb-5 text-center mt-5"
+            style="margin-bottom: 40px"
+          >
+            <div class="row">
+              <div class="col-lg-8 mt-4">
+                {% for obj in transactions %}
+                <div class="in-trans-card">
+                  <div
+                    class="trans-icon"
+                    style="background-color: rgb(189, 182, 182)"
+                  >
+                    {% if obj.sender == user %}
+                    <i class="fas fa-upload text-danger"></i>
+                    {% else %}
+                    <i class="fas fa-download text-primary"></i>
+                    {% endif %}
+                  </div>
+                  <div class="trans-name truncate">
+                    <h4>
+                      {% if obj.sender == user %} Send {% else %} Recieve
+                      <!--  -->
+                      {% endif %}
+                    </h4>
+                    <p class="in-text-lead truncate">{{obj.date}}</p>
+                  </div>
+                  <div class="trans-amount truncate">
+                    <h4
+                      class="{% if obj.status == 'PENDING' %} text-warning {% elif obj.status == 'SUCCESS' %} text-success {% else %} text-danger {% endif %}"
+                    >
+                      <span> - </span>
+                      ${{obj.amount}}
+                    </h4>
+                  </div>
+                  <div class="trans-detail">
+                    <div>
+                      <a class="" href="/transactions-log/145"
+                        ><i class="fas fa-angle-right"></i
+                      ></a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <!-- END: Daily Sales -->
+        </div>
+      </div>
+
+      <div class="col-span-12 sm:col-span-12 2xl:col-span-3 intro-y">
+        <div class="box p-5 zoom-in">
+          <div class="flex">
+            <div class="text-lg font-medium truncate mr-3"></div>
+
+            <div>
+              This site provides information about and access to services
+              offered by the Institution and all its respective affiliates or
+              partners.<br />
+              &copy;2022 All rights reserved.
+            </div>
+            <div
+              class="py-1 px-2 flex items-center rounded-full text-xs bg-slate-100 dark:bg-darkmode-400 text-slate-500 cursor-pointer ml-auto truncate"
+            >
+              <img
+                border="0"
+                src="/assets/img/logo_verisign.gif"
+                width="93"
+                height="52"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END: Content -->
+
+  {% endblock content %}
+</div>
