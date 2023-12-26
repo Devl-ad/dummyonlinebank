@@ -1,4 +1,4 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load humanize %}
 <!--  -->
 {% block title %} Confirm transaction {% endblock title %}
 
@@ -64,7 +64,7 @@
               {% csrf_token %}
               <h3 style="font-size: 20px; font-weight: 700; line-height: 32px">
                 Please Confirm that you want to Transfer
-                <span class="text-danger">${{amount}} </span> <br />
+                <span class="text-danger">${{amount|intcomma}} </span> <br />
                 to <br />
                 <span class="text-primary"
                   ><code>{{benneficiary_name}}</code>

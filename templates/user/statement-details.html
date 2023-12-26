@@ -1,4 +1,4 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load humanize %}
 <!--  -->
 {% block title %} Transactions History {% endblock title %} {% block style %}
 
@@ -213,7 +213,9 @@
                     <tr>
                       <td>Amount</td>
                       <td class="text-center text-danger">
-                        $<span id="with-amount">{{transaction.amount}}</span>
+                        $<span id="with-amount"
+                          >{{transaction.amount|intcomma}}</span
+                        >
                       </td>
                     </tr>
                     <tr>

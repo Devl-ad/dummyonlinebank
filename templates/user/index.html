@@ -1,4 +1,4 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load humanize %}
 <!--  -->
 {% block title %} Dashboard {% endblock title %}
 <!--  -->
@@ -86,7 +86,7 @@
                     </div>
                   </div>
                   <div class="text-3xl font-medium leading-8 mt-6">
-                    &#163;{{user.balance}}
+                    &#163;{{user.balance|intcomma}}
                   </div>
                   <div class="text-base text-slate-500 mt-1">Balance</div>
                 </div>
@@ -114,9 +114,7 @@
                   <div class="text-3xl font-medium leading-8 mt-6">
                     &#163; 0.00
                   </div>
-                  <div class="text-base text-slate-500 mt-1">
-                    Current Balance
-                  </div>
+                  <div class="text-base text-slate-500 mt-1">Balance</div>
                 </div>
               </div>
             </div>

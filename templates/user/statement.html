@@ -1,10 +1,10 @@
-{% extends 'layouts/user.html' %}
+{% extends 'layouts/user.html' %} {% load humanize %}
 <!--  -->
 {% block title %} Transactions History {% endblock title %} {% block style %}
 
 <style>
   .trans-amount.truncate {
-    width: 67px;
+    width: 70px;
   }
   .row {
     display: flex;
@@ -164,7 +164,7 @@
                       class="{% if obj.status == 'PENDING' %} text-warning {% elif obj.status == 'SUCCESS' %} text-success {% else %} text-danger {% endif %}"
                     >
                       <span> - </span>
-                      ${{obj.amount}}
+                      ${{obj.amount|intcomma}}
                     </h4>
                   </div>
                   <div class="trans-detail">
