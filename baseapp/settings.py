@@ -155,7 +155,7 @@ USE_TZ = True
 
 STATIC_URL = "assets/"
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "assets"),)
-STATIC_ROOT = "/home/heritage/public_html/asset"
+STATIC_ROOT = "/home/heritage/public_html/assets/"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
