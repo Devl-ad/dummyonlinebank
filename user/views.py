@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
-from baseapp import utils as baseUtils
+from django.db.models import Sum
+import datetime
+
 from .utils import getTxForm
 import uuid
 from .forms import (
@@ -24,8 +25,24 @@ def index(request):
     last_transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))[
         :1
     ]
+    current_date = datetime.datetime.now()
+    month = current_date.month
+    year = current_date.year
 
-    return render(request, "user/index.html", {"last_transactions": last_transactions})
+    # Calculate the total amount received by the user for the current month
+    total_received = Transactions.objects.filter(
+        receiver=user, date__year=year, date__month=month
+    ).aggregate(total_amount_received=Sum("amount"))
+
+    # The total received by the user for the current month
+    received_amount = total_received["total_amount_received"] or 0
+    print(f"The user has received: {received_amount} for the month")
+
+    return render(
+        request,
+        "user/index.html",
+        {"last_transactions": last_transactions, "received_amount": received_amount},
+    )
 
 
 @login_required()
