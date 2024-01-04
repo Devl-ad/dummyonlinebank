@@ -22,9 +22,7 @@ from django.db.models import Q
 @login_required()
 def index(request):
     user = request.user
-    last_transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))[
-        :1
-    ]
+    transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))
     current_date = datetime.datetime.now()
     month = current_date.month
     year = current_date.year
@@ -41,7 +39,11 @@ def index(request):
     return render(
         request,
         "user/index.html",
-        {"last_transactions": last_transactions, "received_amount": received_amount},
+        {
+            "last_transactions": transactions[:1],
+            "received_amount": received_amount,
+            "transactions_count": transactions.count(),
+        },
     )
 
 
