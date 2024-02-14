@@ -28,7 +28,12 @@
         aria-expanded="false"
         data-tw-toggle="dropdown"
       >
-        <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />
+        <img
+          src="{{user.image_url}}"
+          height="153.6"
+          width="153.6"
+          style="border-radius: 50%; object-fit: cover"
+        />
       </div>
       <!-- dropdown -->
       {% include 'components/user-profile-icon.html' %}
