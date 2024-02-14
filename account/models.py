@@ -30,8 +30,8 @@ class Account(AbstractUser):
 
     def image_url(self):
         if self.profile_image:
-            # https://heritagebankonline.net/{self.profile_image.url}
-            return f"http://localhost:8000/{self.profile_image.url}"
+            # 
+            return f"https://heritagebankonline.net/{self.profile_image.url}"
         else:
             return (
                 f"https://ui-avatars.com/api/?name={self.first_name} {self.last_name}"
