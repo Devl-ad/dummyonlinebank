@@ -10,6 +10,7 @@ from .forms import (
     CreateTXOBSerializer,
     CreateTXInSerializer,
     ChangePinForm,
+    ProfilImageForm
 )
 from account.models import Account
 from .models import Transactions
@@ -49,6 +50,17 @@ def index(request):
 
 @login_required()
 def account_details(request):
+    user = request.user
+  
+    if request.POST:
+        form = ProfilImageForm(request.POST,request.FILES,instance=user)
+        if form.is_valid():
+            form.save()
+            messages.info(request,"Profile image changed")
+            return redirect("account_details")
+        else:
+            messages.info(request,"An Error occured")
+            return redirect("account_details")
     return render(request, "user/account-details.html")
 
 

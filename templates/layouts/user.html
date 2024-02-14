@@ -19,6 +19,12 @@
     <title>{% block title %} {% endblock title %} - {{domain}}</title>
 
     {% block style %} {% endblock style %}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- BEGIN: CSS Assets-->
     <link rel="stylesheet" href="/assets/user/dist/css/app.css" />
@@ -314,6 +320,8 @@
     <!-- BEGIN: Main Color Switcher-->
 
     <!-- END: Main Color Switcher-->
+
+    {% block dialog %} {% endblock dialog %}
 
     <script
       src="//code.tidio.co/xmnvipm2defdwktl0igxhunzpciah2ge.js"

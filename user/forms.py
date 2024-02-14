@@ -539,3 +539,11 @@ class ChangePinForm(forms.ModelForm):
 
         if newpin and confirm_newpin and newpin != confirm_newpin:
             self.add_error("confirm_newpin", "New Security pin doesn't match")
+
+
+class ProfilImageForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields =[
+            "profile_image"
+        ]

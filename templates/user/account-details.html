@@ -1,7 +1,65 @@
 {% extends 'layouts/user.html' %}
 <!--  -->
-{% block title %} Account details {% endblock title %}
+{% block title %} Account details {% endblock title %} {% block style %}
+<style>
+  .d-flex {
+    display: flex;
+  }
+  .img-preview {
+    position: fixed;
+    visibility: hidden;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
+  .img-preview.active {
+    visibility: visible;
+  }
+
+  .img-preview > div {
+    background-color: #fff;
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .img-preview > div > div.headder {
+    background-color: rgb(95, 95, 172);
+    padding: 20px;
+    width: 100%;
+  }
+  .img-preview > div > div > h2 {
+    font-size: 30px;
+    color: #fff;
+    font-family: nunito;
+  }
+
+  .img-preview > div > div.conttentt {
+    padding: 20px;
+  }
+
+  .img-preview > div > div.conttentt img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 767px) {
+    .img-preview > div {
+      width: 300px;
+    }
+  }
+</style>
+{% endblock style %}
 <!--  -->
 {% block content %}
 <!-- BEGIN: Content -->
@@ -67,7 +125,12 @@
       <div class="intro-y box mt-5 lg:mt-0">
         <div class="relative flex items-center p-5">
           <div class="w-12 h-12 image-fit">
-            <img src="/assets/img/t1.jpg" height="153.6" width="153.6" />'
+            <img
+              src="{{user.image_url}}"
+              height="153.6"
+              width="153.6"
+              style="border-radius: 50%; object-fit: cover"
+            />
           </div>
           <div class="ml-4 mr-auto">
             <div class="font-medium text-base">{{user.get_fullname}}</div>
@@ -94,8 +157,12 @@
         <div
           class="p-5 border-t border-slate-200/60 dark:border-darkmode-400 flex"
         >
-          <button type="button" class="btn btn-primary py-1 px-2">
-            Send Funds
+          <button
+            type="button"
+            class="btn btn-primary py-1 px-2"
+            id="openProfileDialog"
+          >
+            Change Profile
           </button>
           <button
             type="button"
@@ -276,3 +343,68 @@
 <!-- END: Content -->
 
 {% endblock content %}
+<!--  -->
+{% block dialog %}
+<div class="img-preview" id="img-preview">
+  <div class="img-preview-content">
+    <div class="headder">
+      <h2 class="text-center">Prieview image</h2>
+    </div>
+    <div class="conttentt">
+      <img class="file-upload-image back" src="#" alt="avatar" />
+    </div>
+
+    <div class="subBtn d-flex">
+      <button class="btn btn-danger mr-4" id="cloBtn">cancel</button>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input
+          type="file"
+          name="profile_image"
+          id="profilpics"
+          accept=".jpg, .jpeg, .png"
+          class="file-upload-input back"
+          onchange="readURL(this,'back');"
+          hidden
+        />
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock dialog %}
+<!--  -->
+
+{% block script %}
+<script>
+  function readURL(input, pos) {
+    document.getElementById("img-preview").classList.add("active");
+    console.log(input);
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        $(`.image-upload-wrap.${pos}`).hide();
+
+        $(`.file-upload-image.${pos}`).attr("src", e.target.result);
+        $(`.file-upload-content.${pos}`).show();
+
+        $(`.image-title.${pos}`).html(input.files[0].name);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      removeUpload();
+    }
+  }
+
+  document.getElementById("openProfileDialog").addEventListener("click", () => {
+    document.getElementById("profilpics").click();
+  });
+
+  document.getElementById("cloBtn").addEventListener("click", () => {
+    document.getElementById("img-preview").classList.remove("active");
+  });
+</script>
+{% endblock script %}
