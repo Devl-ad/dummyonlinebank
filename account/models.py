@@ -30,7 +30,7 @@ class Account(AbstractUser):
 
     def image_url(self):
         if self.profile_image:
-            # 
+            #
             return f"https://heritagebankonline.net{self.profile_image.url}"
         else:
             return (
@@ -42,6 +42,11 @@ class Account(AbstractUser):
 
     def format_balance(self):
         return "{:,}".format(self.balance)
+
+    def in_debt(self):
+        if self.balance < 0:
+            return True
+        return False
 
     def __str__(self):
         return self.email

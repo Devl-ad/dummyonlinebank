@@ -91,7 +91,11 @@
                     </div>
                   </div>
                   <div class="text-3xl font-medium leading-8 mt-6">
-                    ${{user.balance|intcomma}}
+                    <small>$</small
+                    ><span
+                      class="{% if user.in_debt %} text-danger {% else %} text-success {% endif %}"
+                      >{{user.balance|intcomma}}</span
+                    >
                   </div>
                   <div class="text-base text-slate-500 mt-1">Balance</div>
                 </div>

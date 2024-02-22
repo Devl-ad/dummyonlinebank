@@ -10,7 +10,7 @@ from .forms import (
     CreateTXOBSerializer,
     CreateTXInSerializer,
     ChangePinForm,
-    ProfilImageForm
+    ProfilImageForm,
 )
 from account.models import Account
 from .models import Transactions
@@ -51,15 +51,15 @@ def index(request):
 @login_required()
 def account_details(request):
     user = request.user
-  
+
     if request.POST:
-        form = ProfilImageForm(request.POST,request.FILES,instance=user)
+        form = ProfilImageForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            messages.info(request,"Profile image changed")
+            messages.info(request, "Profile image changed")
             return redirect("account_details")
         else:
-            messages.info(request,"An Error occured")
+            messages.info(request, "An Error occured")
             return redirect("account_details")
     return render(request, "user/account-details.html")
 
@@ -93,22 +93,22 @@ def domestic_transfer(request):
         form = CreateTXSBSerializer(user, request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if user.balance >= int(form.cleaned_data.get("amount")):
-                token = str(uuid.uuid4())
-                cache_key = f"confirm_transfer_{token}"
-                ben_cache_key = f"benneficiary_name_{token}"
-                data = cache.get(cache_key)
-                dataii = cache.get(ben_cache_key)
-                if data and dataii:
-                    cache.delete(cache_key)
-                    cache.delete(ben_cache_key)
-                cache.set(cache_key, form.cleaned_data, timeout=600)
-                cache.set(ben_cache_key, instance.receiver.get_fullname(), timeout=600)
+            # if user.balance >= int(form.cleaned_data.get("amount")):
+            token = str(uuid.uuid4())
+            cache_key = f"confirm_transfer_{token}"
+            ben_cache_key = f"benneficiary_name_{token}"
+            data = cache.get(cache_key)
+            dataii = cache.get(ben_cache_key)
+            if data and dataii:
+                cache.delete(cache_key)
+                cache.delete(ben_cache_key)
+            cache.set(cache_key, form.cleaned_data, timeout=600)
+            cache.set(ben_cache_key, instance.receiver.get_fullname(), timeout=600)
 
-                return redirect("confirm_trx", token)
-            else:
-                messages.info(request, "Insufficient Funds")
-                return redirect("domestic_transfer")
+            return redirect("confirm_trx", token)
+            # else:
+            #     messages.info(request, "Insufficient Funds")
+            #     return redirect("domestic_transfer")
 
     else:
         form = CreateTXSBSerializer(user, initial={"type": "DO"})
@@ -122,23 +122,25 @@ def outside_transfer(request):
         form = CreateTXOBSerializer(user, request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if user.balance >= int(form.cleaned_data.get("amount")):
-                full_name = f"{instance.interDetail.first_name} {instance.interDetail.last_name}"
-                token = str(uuid.uuid4())
-                cache_key = f"confirm_transfer_{token}"
-                ben_cache_key = f"benneficiary_name_{token}"
-                data = cache.get(cache_key)
-                dataii = cache.get(ben_cache_key)
-                if data and dataii:
-                    cache.delete(cache_key)
-                    cache.delete(ben_cache_key)
-                cache.set(cache_key, form.cleaned_data, timeout=600)
-                cache.set(ben_cache_key, full_name, timeout=600)
+            # if user.balance >= int(form.cleaned_data.get("amount")):
+            full_name = (
+                f"{instance.interDetail.first_name} {instance.interDetail.last_name}"
+            )
+            token = str(uuid.uuid4())
+            cache_key = f"confirm_transfer_{token}"
+            ben_cache_key = f"benneficiary_name_{token}"
+            data = cache.get(cache_key)
+            dataii = cache.get(ben_cache_key)
+            if data and dataii:
+                cache.delete(cache_key)
+                cache.delete(ben_cache_key)
+            cache.set(cache_key, form.cleaned_data, timeout=600)
+            cache.set(ben_cache_key, full_name, timeout=600)
 
-                return redirect("confirm_trx", token)
-            else:
-                messages.info(request, "Insufficient Funds")
-                return redirect("outside_transfer")
+            return redirect("confirm_trx", token)
+            # else:
+            #     messages.info(request, "Insufficient Funds")
+            #     return redirect("outside_transfer")
     else:
         form = CreateTXOBSerializer(user, initial={"type": "OB"})
     return render(request, "user/outside_transfer.html", {"form": form})
@@ -151,23 +153,25 @@ def inter_transfer(request):
         form = CreateTXInSerializer(user, request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
-            if user.balance >= int(form.cleaned_data.get("amount")):
-                full_name = f"{instance.interDetail.first_name} {instance.interDetail.last_name}"
-                token = str(uuid.uuid4())
-                cache_key = f"confirm_transfer_{token}"
-                ben_cache_key = f"benneficiary_name_{token}"
-                data = cache.get(cache_key)
-                dataii = cache.get(ben_cache_key)
-                if data and dataii:
-                    cache.delete(cache_key)
-                    cache.delete(ben_cache_key)
-                cache.set(cache_key, form.cleaned_data, timeout=600)
-                cache.set(ben_cache_key, full_name, timeout=600)
+            # if user.balance >= int(form.cleaned_data.get("amount")):
+            full_name = (
+                f"{instance.interDetail.first_name} {instance.interDetail.last_name}"
+            )
+            token = str(uuid.uuid4())
+            cache_key = f"confirm_transfer_{token}"
+            ben_cache_key = f"benneficiary_name_{token}"
+            data = cache.get(cache_key)
+            dataii = cache.get(ben_cache_key)
+            if data and dataii:
+                cache.delete(cache_key)
+                cache.delete(ben_cache_key)
+            cache.set(cache_key, form.cleaned_data, timeout=600)
+            cache.set(ben_cache_key, full_name, timeout=600)
 
-                return redirect("confirm_trx", token)
-            else:
-                messages.info(request, "Insufficient Funds")
-                return redirect("inter_transfer")
+            return redirect("confirm_trx", token)
+            # else:
+            #     messages.info(request, "Insufficient Funds")
+            #     return redirect("inter_transfer")
         print(form.errors)
     else:
         form = CreateTXInSerializer(user, initial={"type": "IN"})
@@ -214,9 +218,9 @@ def confirm_trx(request, token):
     if not cdata and not benneficiary_name:
         messages.info(request, "Invalid link")
         return redirect("dashboard")
-    if user.balance < int(cdata["amount"]):
-        messages.info(request, "SOMETHING WENT WRONG")
-        return redirect("dashboard")
+    # if user.balance < int(cdata["amount"]):
+    #     messages.info(request, "SOMETHING WENT WRONG")
+    #     return redirect("dashboard")
     tx_type = cdata["type"]
     formData = getTxForm(tx_type)
     if request.POST:

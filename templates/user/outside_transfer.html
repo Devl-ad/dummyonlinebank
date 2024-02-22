@@ -70,6 +70,11 @@
             <form method="POST" action="" name="regform">
               {% csrf_token %} {{form|crispy}}
 
+              <p style="color: red">
+                Warning: Your account balance will go negative if your balance
+                is lower than the amount to be transfer .
+              </p>
+
               <div class="sm:ml-20 sm:pl-5 mt-5">
                 <button class="btn btn-primary" name="submit">Next</button>
               </div>
