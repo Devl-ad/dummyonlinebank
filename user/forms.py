@@ -108,10 +108,10 @@ class CreateTXOBSerializer(forms.ModelForm):
             attrs={
                 "type": "email",
                 "class": "form-control",
-                "placeholder": "Recepient Email",
+                "placeholder": "Recipient Email",
             }
         ),
-        label="Recepient  Email",
+        label="Recipient  Email",
         required=True,
     )
 
@@ -125,7 +125,7 @@ class CreateTXOBSerializer(forms.ModelForm):
                 "autocomplete": False,
             }
         ),
-        label="Recepient First Name",
+        label="Recipient First Name",
         required=True,
     )
 
@@ -139,7 +139,7 @@ class CreateTXOBSerializer(forms.ModelForm):
                 "autocomplete": False,
             }
         ),
-        label="Recepient Last Name",
+        label="Recipient Last Name",
         required=True,
     )
 
@@ -150,11 +150,11 @@ class CreateTXOBSerializer(forms.ModelForm):
             attrs={
                 "type": "text",
                 "class": "form-control",
-                "placeholder": "Recepient Account Number",
+                "placeholder": "Recipient Account Number",
                 "autocomplete": False,
             }
         ),
-        label="Recepient Account Number",
+        label="Recipient Account Number",
     )
 
     bank_name = forms.CharField(
@@ -164,11 +164,11 @@ class CreateTXOBSerializer(forms.ModelForm):
             attrs={
                 "type": "text",
                 "class": "form-control",
-                "placeholder": "Recepient Bank Name",
+                "placeholder": "Recipient Bank Name",
                 "autocomplete": False,
             }
         ),
-        label="Recepient Bank Name",
+        label="Recipient Bank Name",
     )
     route_num = forms.CharField(
         required=True,
@@ -181,7 +181,7 @@ class CreateTXOBSerializer(forms.ModelForm):
                 "autocomplete": False,
             }
         ),
-        label="Recepient Bank Route Number",
+        label="Recipient Bank Route Number",
     )
     amount = forms.CharField(
         widget=forms.TextInput(
