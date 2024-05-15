@@ -30,19 +30,38 @@
     <title>{% block title %} {% endblock title %} | {{domain}}</title>
 
     <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+    <style>
+      body {
+        top: 0 !important;
+        margin-top: 0 !important;
+      }
+
+      body > div:nth-child(1) {
+        display: none;
+      }
+    </style>
     {% block style %} {% endblock style %}
-     <!-- Smartsupp Live Chat script -->
-<script type="text/javascript">
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = '407613dc9abc7a7e92451614d758f35772b3ff83';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-</script>
-<noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+    <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+      var _smartsupp = _smartsupp || {};
+      _smartsupp.key = "407613dc9abc7a7e92451614d758f35772b3ff83";
+      window.smartsupp ||
+        (function (d) {
+          var s,
+            c,
+            o = (smartsupp = function () {
+              o._.push(arguments);
+            });
+          o._ = [];
+          s = d.getElementsByTagName("script")[0];
+          c = d.createElement("script");
+          c.type = "text/javascript";
+          c.charset = "utf-8";
+          c.async = true;
+          c.src = "https://www.smartsuppchat.com/loader.js?";
+          s.parentNode.insertBefore(c, s);
+        })(document);
+    </script>
   </head>
 
   <body>
@@ -154,6 +173,7 @@ window.smartsupp||(function(d) {
                 <a href="/" class="white-logo"
                   ><img src="/assets/img/logo2.png" alt="logo"
                 /></a>
+
                 <p>
                   heritage Savings Bank is a bank for premier business, offering
                   financial services and competitive products to Large
@@ -227,7 +247,20 @@ window.smartsupp||(function(d) {
       </label>
     </div>
 
- 
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: "en" },
+          "google_translate_element"
+        );
+      }
+    </script>
+
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+
     <!-- Links of JS files -->
     <script src="/assets/js/jquery.min.js"></script>
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
