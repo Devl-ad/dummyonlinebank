@@ -23,7 +23,9 @@ from django.db.models import Q
 @login_required()
 def index(request):
     user = request.user
-    transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))
+    transactions = Transactions.objects.filter(
+        Q(sender=user) | Q(receiver=user)
+    ).order_by("-date")
     current_date = datetime.datetime.now()
     month = current_date.month
     year = current_date.year
@@ -67,7 +69,9 @@ def account_details(request):
 @login_required()
 def statement(request):
     user = request.user
-    transactions = Transactions.objects.filter(Q(sender=user) | Q(receiver=user))
+    transactions = Transactions.objects.filter(
+        Q(sender=user) | Q(receiver=user)
+    ).order_by("-date")
     return render(request, "user/statement.html", {"transactions": transactions})
 
 
