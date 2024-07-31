@@ -176,7 +176,7 @@ def inter_transfer(request):
             # else:
             #     messages.info(request, "Insufficient Funds")
             #     return redirect("inter_transfer")
-        print(form.errors)
+        # print(form.errors)
     else:
         form = CreateTXInSerializer(user, initial={"type": "IN"})
     return render(request, "user/inter_transfer.html", {"form": form})
