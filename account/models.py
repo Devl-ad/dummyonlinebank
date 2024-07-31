@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from baseapp import utils
+
 
 class Account(AbstractUser):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
@@ -51,9 +53,10 @@ class Account(AbstractUser):
     def __str__(self):
         return self.email
 
-    # def save(self, *args, **kwargs):
-    #     # Perform custom logic before saving
-    #     self.username = utils.gen_random_number()
+    def save(self, *args, **kwargs):
+        # Perform custom logic before saving
+        if not self.username:
+            self.username = utils.gen_random_number()
 
-    #     # Call parent save method
-    #     super().save(*args, **kwargs)
+        # Call parent save method
+        super().save(*args, **kwargs)
