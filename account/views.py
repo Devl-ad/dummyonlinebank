@@ -49,7 +49,7 @@ def sign_up(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             current_site = get_current_site(request)
-            subject = f"welcome to Heritage, confirm your email address"
+            subject = f"Confirm your email address"
             user = {
                 "email": form.cleaned_data["email"],
                 "password": form.cleaned_data["password1"],
